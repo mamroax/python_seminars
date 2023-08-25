@@ -13,7 +13,7 @@
 # 4 - изменение данных
 # 5 - удаление данных
 # 4 - выход"""
-from work_w_file import write, read_all, get_by_name, alter_line
+from file_management import write, read_all, get_by_name, alter_line
 
 def choose(choice):
     if choice == '1': write(input("Введите ваши данные пример:(фамилия имя отчество номер телефона) "))

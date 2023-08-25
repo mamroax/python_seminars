@@ -21,8 +21,7 @@ clear = lambda: os.system('cls' if os.name=='nt' else 'clear')
 Пользователь также может ввести имя или фамилию, и Вы должны реализовать функционал
 для изменения и удаления данных.
 """
-from algorithm import *
-from work_w_file import *
+from algorithm import choose, print_instructions
 
 while True:
     clear()

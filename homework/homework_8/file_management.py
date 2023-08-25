@@ -4,7 +4,8 @@ import os
 INFILE = "data.txt"
 OUTFILE = "new_data.txt"
 ENC = "utf-8"
-
+# нужно добавить проверку если такой номер уже есть, но это не текущий номер, то заменить нельзя
+# если такой номер уже есть и это текущий, то заменить можно
 
 def check(text):
     if len(text.split()) == 4:
@@ -18,7 +19,7 @@ def check(text):
         print("Нужно ввести (Фамилию Имя Отчество Номер)!")
         return False
 
-def check_number(tel_number):
+def number_in_file(tel_number):
     with open(INFILE, "r", encoding=ENC) as f:
         for line in f:
             if tel_number in line:
@@ -27,10 +28,13 @@ def check_number(tel_number):
 
 def write(text):
     if check(text):
-        with open(INFILE, "a", encoding=ENC) as f:
-            f.writelines(text)
-            f.writelines("\n")
-            print("Успешно")
+        if not number_in_file(text.split()[3]):
+            with open(INFILE, "a", encoding=ENC) as f:
+                f.writelines(text)
+                f.writelines("\n")
+                print("Успешно")
+        else:
+            print("Такой номер уже есть!")
     else:
         return -1
 
@@ -62,10 +66,13 @@ def alter_line(words, alter):
                 if alter:
                     new_line = str(input("На кого хотите заменить? "))
                     if check(new_line):
-                        outfile.writelines(new_line + "\n")
-                        print("Строка успешно заменена")
-                    else:
-                        return -1
+                        number = new_line.split()[3]
+                        if not number_in_file(number) or number in line:
+                            outfile.writelines(new_line + "\n")
+                            print("Строка успешно заменена")
+                        else:
+                            print("Такой номер уже есть!")
+                            outfile.writelines(line)
                 else:
                     print("Строка успешно удалена")
                 rewrite = True
